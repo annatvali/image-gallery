@@ -1,12 +1,33 @@
-import './App.css'
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import MainPage from "./MainPage";
+import HistoryPage from "./HistoryPage";
+import ImageModal from "./ImageModal";
 
-function App() {
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <MainPage />,
+    children: [
+      {
+        path: 'image/:id',
+        element: <ImageModal />,
+      },
+    ],
+  },
+  {
+    path: '/history',
+    element: <HistoryPage />,
+    children: [
+      {
+        path: ':searchTerm/image/:id',
+        element: <ImageModal />,
+      },
+    ],
+  },
+]);
 
-  return (
-    <>
-      <h1 className='text-2xl'>Image Gallery</h1>
-    </>
-  );
-}
+const App = () => {
+  return <RouterProvider router={router} />
+};
 
-export default App
+export default App;
